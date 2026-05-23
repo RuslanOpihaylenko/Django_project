@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рестораны</title>
+</head>
+<body>
+
+<h1>Список ресторанов</h1>
+
+<a href="{% url 'add_restaurant' %}">
+    Добавить ресторан
+</a>
+
+<hr>
+
+<form method="GET">
+
+    <input type="text"
+           name="q"
+           placeholder="Поиск по специализации">
+
+    <button type="submit">
+        Найти
+    </button>
+
+</form>
+
+<hr>
+
+{% for restaurant in restaurants %}
+
+    <h2>{{ restaurant.name }}</h2>
+
+    <p>
+        <strong>Адрес:</strong>
+        {{ restaurant.address }}
+    </p>
+
+    <p>
+        <strong>Телефон:</strong>
+        {{ restaurant.contact_number }}
+    </p>
+
+    <p>
+        <strong>Сайт:</strong>
+
+        <a href="{{ restaurant.website }}">
+            {{ restaurant.website }}
+        </a>
+    </p>
+
+    <p>
+        <strong>Специализации:</strong>
+
+        {% for spec in restaurant.specializations.all %}
+            {{ spec.name }}
+        {% endfor %}
+    </p>
+
+    <div>
+
+        {% for image in restaurant.images.all %}
+
+            <img src="{{ image.image.url }}"
+                 width="200">
+
+        {% endfor %}
+
+    </div>
+
+    <br>
+
+    <a href="{% url 'edit_restaurant' restaurant.id %}">
+        Редактировать
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'delete_restaurant' restaurant.id %}">
+        Удалить
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'add_review' restaurant.id %}">
+        Добавить отзыв
+    </a>
+
+    <h3>Отзывы:</h3>
+
+    {% for review in restaurant.reviews.all %}
+
+        <p>
+            <strong>{{ review.author }}</strong>
+        </p>
+
+        <p>{{ review.text }}</p>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Отзывов пока нет</p>
+
+    {% endfor %}
+
+    <hr>
+
+{% endfor %}
+
+</body>
+</html>
