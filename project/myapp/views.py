@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Restaurant, RestaurantImage, Specialization
 from .forms import RestaurantForm, ReviewForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
 def add_restaurant(request):
@@ -35,9 +38,8 @@ def restaurant_list(request):
     return render(request, 'restaurant_list.html', {
         'restaurants': restaurants
     })
-Specialization.objects.create(name="Итальянский")
-Specialization.objects.create(name="Французский")
-Specialization.objects.create(name="Семейный")
+
+
 def restaurant_list(request):
 
     query = request.GET.get('q')
@@ -83,6 +85,7 @@ def edit_restaurant(request, id):
         'form': form
     })
 
+@login_required
 def add_review(request, id):
 
     restaurant = get_object_or_404(Restaurant, id=id)
@@ -94,7 +97,15 @@ def add_review(request, id):
         if form.is_valid():
 
             review = form.save(commit=False)
+
             review.restaurant = restaurant
+            review.author = request.user
+
+            if request.user.is_authenticated:
+                review.approved = True
+            else:
+                review.approved = False
+
             review.save()
 
             return redirect('restaurant_list')
@@ -108,3 +119,23 @@ def add_review(request, id):
     })
 def page_not_found(request, exception):
     return render(request, 'Not_found.html')
+
+def register(request):
+
+    if request.method == 'POST':
+
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+
+            login(request, user)
+
+            return redirect('restaurant_list')
+
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'register.html', {
+        'form': form
+    })

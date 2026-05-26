@@ -25,4 +25,4 @@ class RestaurantImageForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['author', 'text']
+        fields = ['text']
