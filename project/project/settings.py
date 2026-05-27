@@ -30,6 +30,8 @@ SECRET_KEY = 'django-insecure-z*=nh9wldw8(&zbkrhcyw6bw1s-7en8zaw)e*y=)i)qt1)eq#6
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+LOGIN_REDIRECT_URL = 'restaurant_list'
+LOGOUT_REDIRECT_URL = 'restaurant_list'
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp.apps.MyappConfig',
+    'adminpart.apps.AdminpartConfig',
 ]
 
 MIDDLEWARE = [

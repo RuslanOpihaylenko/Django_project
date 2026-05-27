@@ -23,6 +23,7 @@ from myapp.views import page_not_found
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
+    path('staff/', include('adminpart.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(
