@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Сотрудники</title>
+</head>
+<body>
+
+<h1>
+    Сотрудники ресторана:
+    {{ restaurant_name }}
+</h1>
+
+{% for employee in employees %}
+
+    <h3>
+        {{ employee.first_name }}
+        {{ employee.last_name }}
+    </h3>
+
+    <p>
+        Телефон:
+        {{ employee.phone }}
+    </p>
+
+    <p>
+        Email:
+        {{ employee.email }}
+    </p>
+
+    <p>
+        Ставка:
+        {{ employee.salary }}
+    </p>
+
+    <p>
+        Дата приема:
+        {{ employee.hire_date }}
+    </p>
+
+    <hr>
+
+{% endfor %}
+
+</body>
+</html>

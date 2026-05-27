@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Владельцы</title>
+</head>
+<body>
+
+<h1>Владельцы ресторанов</h1>
+
+{% for owner in owners %}
+
+    <h3>
+        {{ owner.first_name }}
+        {{ owner.last_name }}
+    </h3>
+
+    <p>
+        Телефон:
+        {{ owner.phone }}
+    </p>
+
+    <p>
+        Email:
+        {{ owner.email }}
+    </p>
+
+    <p>
+        Рестораны:
+    </p>
+
+    <ul>
+
+    {% for restaurant in owner.restaurants.all %}
+
+        <li>{{ restaurant.name }}</li>
+
+    {% endfor %}
+
+    </ul>
+
+    <hr>
+
+{% endfor %}
+
+</body>
+</html>
